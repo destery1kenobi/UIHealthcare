@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>INSPIRE Clinical AI Assistant - Trauma-Informed Care Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!--
+  FOLDER STRUCTURE:
+  /AI HealthCare/
+    - AI Health Tool.html (this file)
+    - logo_INSPIRE_2.png
+    - (additional images and assets go here)
+-->
+<style>
+  :root{
+    --bg: #fbfbfe;
+    --card: #ffffff;
+    --text: #1f2149;
+    --muted: #6d6f89;
+    --primary: #c41e3a;
+    --primary-dark: #a01830;
+    --accent: #1f2149;
+    --soft: #f5e6ea;
+    --glass: rgba(196,30,58,0.06);
+    --radius:14px;
+    --max-w:1200px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    color:var(--text);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:var(--max-w);margin:36px auto;padding:18px;}
+  
+  .top-bar{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:20px;
+    align-items:start;
+    margin-bottom:28px;
+  }
+  
+  .main-content{
+    max-width:100%;
+  }
+  
+  .logo-card{
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 18px 50px rgba(31,33,73,0.06);
+    border:1px solid rgba(31,33,73,0.04);
+    background:linear-gradient(180deg,#ffffff,var(--soft));
+    padding:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:280px;
+  }
+  
+  .logo-card img{
+    max-width:260px;
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
+  .logo-card-compact{
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(31,33,73,0.08);
+    border:1px solid rgba(31,33,73,0.04);
+    background:linear-gradient(180deg,#ffffff,var(--soft));
+    padding:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  
+  .logo-card-compact img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
+  .accordion-item{
+    border-bottom:1px solid rgba(31,33,73,0.06);
+  }
+
+  .accordion-item:last-child{
+    border-bottom:none;
+  }
+
+  .accordion-trigger{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    background:none;
+    border:none;
+    font-family:inherit;
+    font-size:14px;
+    font-weight:600;
+    color:var(--primary);
+    cursor:pointer;
+    text-align:left;
+    transition:all 0.2s ease;
+  }
+
+  .accordion-trigger:hover{
+    color:var(--primary-dark);
+  }
+
+  .accordion-icon{
+    font-size:18px;
+    font-weight:700;
+    transition:transform 0.2s ease;
+  }
+
+  .accordion-trigger.active .accordion-icon{
+    transform:rotate(45deg);
+  }
+
+  .accordion-content{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+    padding:0;
+  }
+
+  .accordion-content.active{
+    max-height:200px;
+    padding-bottom:12px;
+  }
+
+  .panel{
+    background:var(--card);
+    border-radius:12px;
+    padding:16px;
+    border:1px solid rgba(31,33,73,0.06);
+    box-shadow:0 2px 8px rgba(31,33,73,0.02);
+  }
+  
+  .panel-title{
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:8px;
+    font-size:15px;
+  }
+  
+  .small{font-size:13px;color:var(--muted);line-height:1.5}
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:24px;
+  }
+  
+  .brand-logo{
+    width:64px;
+    height:64px;
+    border-radius:12px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 30px rgba(196,30,58,0.12);
+    border:2px solid var(--soft);
+    padding:8px;
+  }
+  
+  .brand-logo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+  
+  .brand-text h1{
+    font-size:24px;
+    margin:0 0 4px 0;
+    font-weight:700;
+    color:var(--primary);
+    line-height:1.1;
+  }
+  
+  .brand-text .subtitle{
+    font-size:13px;
+    color:var(--muted);
+    margin:0;
+  }
+
+  h2{
+    font-size:38px;
+    line-height:1.1;
+    margin:0 0 16px;
+    font-weight:700;
+    color:var(--accent);
+  }
+
+  h3{
+    font-size:22px;
+    line-height:1.1;
+    margin:0 0 12px;
+    font-weight:700;
+    color:var(--accent);
+  }
+  
+  p.lead{
+    color:var(--muted);
+    margin:0 0 24px;
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  .chat-placeholder{
+    border-radius:12px;
+    padding:60px 30px;
+    min-height:320px;
+    border:2px dashed rgba(196,30,58,0.2);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,#ffffff,#fcfcfd);
+    color:var(--muted);
+    margin-top:12px;
+  }
+  
+  .chat-placeholder strong{
+    color:var(--primary);
+    display:block;
+    margin-bottom:16px;
+    font-size:20px;
+  }
+  
+  .chat-placeholder p{
+    margin:0;
+    font-size:15px;
+    max-width:500px;
+    text-align:center;
+    line-height:1.6;
+  }
+
+  .feature-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  
+  .feature-card{
+    background:var(--card);
+    border-radius:12px;
+    padding:18px;
+    border:1px solid rgba(31,33,73,0.06);
+    transition:all 0.2s ease;
+  }
+  
+  .feature-card:hover{
+    border-color:var(--primary);
+    box-shadow:0 4px 16px rgba(196,30,58,0.08);
+  }
+  
+  .feature-icon{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:700;
+    font-size:18px;
+    margin-bottom:12px;
+  }
+  
+  .feature-title{
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:6px;
+    font-size:15px;
+  }
+
+  .suggested{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:12px;
+  }
+  
+  .suggested button{
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid rgba(31,33,73,0.08);
+    background:linear-gradient(180deg,#ffffff,#fafbfc);
+    cursor:pointer;
+    text-align:left;
+    font-size:14px;
+    color:var(--muted);
+    transition:all 0.2s ease;
+    font-family:inherit;
+  }
+  
+  .suggested button:hover{
+    border-color:var(--primary);
+    color:var(--text);
+    transform:translateX(4px);
+  }
+
+  footer{
+    margin-top:32px;
+    padding-top:20px;
+    border-top:1px solid rgba(31,33,73,0.06);
+    color:var(--muted);
+    font-size:13px;
+    text-align:center;
+  }
+  
+  .footer-strong{
+    color:var(--primary);
+    font-weight:600;
+  }
+
+  .status-badge{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:6px;
+    background:var(--soft);
+    color:var(--primary);
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:12px;
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .top-bar{
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+    .logo-card-compact{
+      padding:16px;
+      max-width:200px;
+    }
+    h2{font-size:32px}
+    .feature-grid{
+      grid-template-columns:1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Top Bar: Logo + About -->
+    <div class="top-bar">
+      <div class="logo-card-compact">
+        <img src="logo_INSPIRE_2.png" alt="INSPIRE Logo">
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">About This Tool</div>
+        <div class="small">This AI assistant serves as a reference tool for healthcare professionals who have completed trauma-informed care training. Use it to quickly recall key concepts, screening approaches, and patient-centered strategies from your coursework.</div>
+      </div>
+    </div>
+
+    <!-- Main Content: Single Column -->
+    <div class="main-content">
+      <header class="brand">
+        <div class="brand-logo">
+          <img src="logo_INSPIRE_2.png" alt="INSPIRE">
+        </div>
+        <div class="brand-text">
+          <h1>INSPIRE Clinical AI Assistant</h1>
+          <p class="subtitle">Trauma-informed reproductive healthcare reference tool</p>
+        </div>
+      </header>
+
+      <main>
+          <div class="status-badge">Training Reference Tool • AI Integration Pending</div>
+          
+          <h2>Your trauma-informed care assistant</h2>
+          
+          <p class="lead">Ask questions about trauma-informed care principles, screening approaches, examination techniques, or specific clinical scenarios from your training. Get instant access to the knowledge you need at the point of care.</p>
+
+          <div class="panel">
+            <div class="panel-title">AI Assistant</div>
+            <div class="small">Reference specific topics from your training, review case scenarios, or refresh your knowledge of trauma-informed best practices.</div>
+            
+            <div class="chat-placeholder" role="region" aria-label="AI Assistant Integration Area">
+              <strong>AI Assistant Integration Area</strong>
+              <p>This is where you'll interact with the INSPIRE AI assistant to get answers about trauma-informed reproductive healthcare.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:16px" class="panel">
+            <div class="panel-title">Example Questions</div>
+            <div class="small" style="margin-bottom:8px">Try asking questions like these:</div>
+            <div class="suggested">
+              <button>What are the key steps for trauma screening at the beginning of a visit?</button>
+              <button>How do I respond when a patient discloses childhood sexual abuse?</button>
+              <button>What examination modifications can I offer trauma survivors?</button>
+              <button>What language should I avoid during sensitive examinations?</button>
+              <button>How do I recognize dissociation during a pelvic exam?</button>
+              <button>What grounding techniques can help an activated patient?</button>
+              <button>How do I document trauma history while respecting patient privacy?</button>
+              <button>What are signs that a patient may need trauma-specific services?</button>
+            </div>
+          </div>
+
+          <div style="margin-top:16px" class="panel">
+            <div class="panel-title">Key Principles</div>
+            
+            <div class="accordion-item">
+              <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>Realize</span>
+                <span class="accordion-icon">+</span>
+              </button>
+              <div class="accordion-content">
+                <div class="small">Understand that 90% of adults have experienced trauma with lasting health impacts</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>Recognize</span>
+                <span class="accordion-icon">+</span>
+              </button>
+              <div class="accordion-content">
+                <div class="small">Identify signs of trauma in patients and colleagues during care encounters</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>Respond</span>
+                <span class="accordion-icon">+</span>
+              </button>
+              <div class="accordion-content">
+                <div class="small">Create physical, psychological, and emotional safety in all interactions</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" onclick="toggleAccordion(this)">
+                <span>Resist</span>
+                <span class="accordion-icon">+</span>
+              </button>
+              <div class="accordion-content">
+                <div class="small">Actively avoid retraumatization through thoughtful, patient-centered practices</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px" class="panel">
+            <div class="panel-title">Privacy & Compliance</div>
+            <div class="small">This tool is designed for secure deployment with proper HIPAA compliance, Business Associate Agreements (BAA), and data protection measures in place.</div>
+          </div>
+
+          <div style="margin-top:16px">
+            <h3 style="font-size:22px;margin:0 0 12px;color:var(--accent)">What the assistant can help with</h3>
+            <div class="feature-grid">
+              <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">Screening & Assessment</div>
+                <div class="small">Quick access to trauma screening scripts, the PC-PTSD-5 tool, and strategies for responding to disclosures with empathy.</div>
+              </div>
+              
+              <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <div class="feature-title">Examination Techniques</div>
+                <div class="small">Patient-centered approaches for pelvic exams, including positioning options, continual consent, and grounding strategies.</div>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <div class="feature-title">Communication Strategies</div>
+                <div class="small">Language considerations, power dynamics, and collaborative decision-making techniques for trauma survivors.</div>
+              </div>
+              
+              <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-title">Resource Connection</div>
+                <div class="small">Guidelines for linking patients to trauma-specific services, peer support, and behavioral health professionals.</div>
+              </div>
+            </div>
+          </div>
+
+        </main>
+
+        <footer>
+          <strong class="footer-strong">INSPIRE Clinical AI Assistant</strong><br>
+          Supporting healthcare professionals in providing consistently trauma-informed reproductive care.
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI INTEGRATION BLOCK
+    The clinical AI assistant will be integrated here.
+    Example integration:
+    <script src="https://partner.example.com/clinical-ai-widget.js"></script>
+    <script>
+      window.ClinicalAI.init({ 
+        container: '.chat-placeholder',
+        theme: 'inspire',
+        context: 'trauma-informed-care'
+      });
+    </script>
+  -->
+
+  <script>
+    function toggleAccordion(button) {
+      const content = button.nextElementSibling;
+      const isActive = button.classList.contains('active');
+      
+      // Close all accordions
+      document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+        trigger.classList.remove('active');
+        trigger.nextElementSibling.classList.remove('active');
+      });
+      
+      // If this wasn't active, open it
+      if (!isActive) {
+        button.classList.add('active');
+        content.classList.add('active');
+      }
+    }
+  </script>
+
+</body>
+</html>
