@@ -74,7 +74,7 @@ button{cursor:pointer}
 .brand-block{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:0;
   min-width:0;
 }
 
@@ -114,7 +114,11 @@ button{cursor:pointer}
   z-index:1;
 }
 
-.brand-copy{min-width:0}
+/* LOGO-ONLY HEADER FIX */
+.brand-copy{
+  display:none;
+}
+
 .brand-copy h1{
   margin:2px 0 4px;
   font-size:1.2rem;
@@ -629,6 +633,5 @@ button{cursor:pointer}
   .surface-card{padding:18px}
   .app-main{padding:18px 14px calc(var(--mobile-nav-h) + 24px)}
   .app-header__inner{padding:14px}
-  .brand-copy h1{font-size:1.05rem}
   .brand-subtitle{font-size:0.86rem}
 }
